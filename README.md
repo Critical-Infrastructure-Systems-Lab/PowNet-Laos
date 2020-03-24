@@ -7,6 +7,8 @@ The basic functionalities and PowNet input-output structure are described in [Ch
 # Laotian Power System
 The Main generation and transmission components of the Laotian power system are shown in the Figure below (adapted from Chowdhury et al. (2020a)). Note that the hydropower dams are located in the Lower Mekong River basin, as illustrated in the inset.
 
+![](https://github.com/kamal0013/PowNet-Laos/blob/master/Model%20and%20data/fig1_Laotian_grid_mekong.jpg)
+
 # License
 PowNet-Laos and the data are released under the MIT license. Please read it carefully before employing the model.
 
@@ -14,6 +16,7 @@ PowNet-Laos and the data are released under the MIT license. Please read it care
 If you use PowNet-Laos and/or the data for your research, please cite the following papers:
 
 Chowdhury, A.K., Dang, T.D., Bagchi, A., and Galelli, S., (2020a). Expected benefits of Laos' hydropower development curbed by hydro-climatic variability and limited transmission capacity—opportunities to reform. Journal of Water Resources Planning and Management (in review).
+
 Chowdhury, A.K., Kern, J., Dang, T.D. and Galelli, S., (2020b). PowNet: A Network-Constrained Unit Commitment/Economic Dispatch Model for Large-Scale Power Systems Analysis. Journal of Open Research Software, 8(1), p.5. DOI: http://doi.org/10.5334/jors.302
 
 In addition, each release of PowNet-Laos is achieved on Zenodo with a DOI, that can be found here.
