@@ -1,4 +1,4 @@
-![license MIT](https://img.shields.io/github/license/kamal0013/PowNet)
+![license MIT](https://img.shields.io/github/license/kamal0013/PowNet) [![DOI](https://zenodo.org/badge/249703321.svg)](https://zenodo.org/badge/latestdoi/249703321)
 # PowNet-Laos: Unit Commitment / Economic Dispatch model for the Laotian power system (with sample data)
 This repository contains PowNet-Laos, an implementation of [PowNet](https://github.com/kamal0013/PowNet) model on the Laotian power system. The model is developed based on the power system facilities (power plants, substations, import/export nodes, and high-voltage transmission lines) operated in Laos during the year 2016. The majority of data are extracted from technical reports, publicly available, published by Electricite Du Laos (EDL) and the Department of Energy Policy and Planning (DEPP), Ministry of Energy and Mine, Lao PDR. The input data concerning the production of the hydropower reservoirs are generated via simulation with [VIC-Res](https://github.com/thanhiwer/VICRes). We note that these data could be generated with other hydrological-hydraulic models. Please refer to Chowdhury et al. (2020a) for additional details on (1) the Laotian power system, and (2) PowNet-Laos setup.
 
@@ -19,7 +19,7 @@ Chowdhury, A.K., Dang, T.D., Bagchi, A., and Galelli, S., (2020a). Expected bene
 
 Chowdhury, A.K., Kern, J., Dang, T.D. and Galelli, S., (2020b). PowNet: A Network-Constrained Unit Commitment/Economic Dispatch Model for Large-Scale Power Systems Analysis. Journal of Open Research Software, 8(1), p.5. DOI: http://doi.org/10.5334/jors.302
 
-In addition, each release of PowNet-Laos is achieved on Zenodo with a DOI, that can be found here.
+In addition, each release of PowNet-Laos is achieved on Zenodo with a DOI, that can be found here [![DOI](https://zenodo.org/badge/249703321.svg)](https://zenodo.org/badge/latestdoi/249703321).
 
 # Contact
 For questions and feedback related to PowNet-Laos, please send an email to afm.chowdhury@uon.edu.au (AFM Kamal Chowdhury) or stefano_galelli@sutd.edu.sg (Stefano Galelli).
