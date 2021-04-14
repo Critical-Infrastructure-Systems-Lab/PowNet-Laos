@@ -488,7 +488,7 @@ def MinDown(model,j,i,k):
 model.MinimumDown = Constraint(model.Generators,model.HH_periods,model.HH_periods,rule=MinDown)
 
 ######==========Ramp Rate Constraints =========#############
-def Ramp1(model,j,i): #v1.3
+def Ramp1(model,j,i):
     a = model.mwh[j,i]
     if i == 1:
         b = model.ini_mwh[j]
@@ -497,7 +497,7 @@ def Ramp1(model,j,i): #v1.3
     return a - b <= model.ramp[j] 
 model.RampCon1 = Constraint(model.Generators,model.hh_periods,rule=Ramp1)
 
-def Ramp2(model,j,i): #v1.3
+def Ramp2(model,j,i): 
     a = model.mwh[j,i]
     if i == 1:
         b = model.ini_mwh[j]
