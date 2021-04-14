@@ -17,29 +17,47 @@ data_name = 'pownet_data_laos_'+str(curr_year)+''
 
 
 #read thermo plant parameters into DataFrame
-df_gen = pd.read_csv('data_laos_thermo_2016.csv',header=0)
-df_gen_deratef = pd.read_csv('data_laos_thermo_deratef.csv',header=0)
-df_gen['deratef'] = df_gen_deratef['deratef_'+str(curr_year)+'']
+df_gen = pd.read_csv('input/data_laos_thermo_2016.csv',header=0)
+df_gen['ini_on']=0
+df_gen['ini_mwh']=0 
+
+df_gen_deratef = pd.read_csv('input/data_laos_thermo_deratef_'+str(curr_year)+'.csv',header=0)
+gen_units = list(df_gen_deratef.columns[4:])
 
 ##hourly ts of hydropower
-df_hydro = pd.read_csv('data_laos_hydro_'+str(curr_year)+'.csv',header=0)   
+df_hydro = pd.read_csv('input/data_laos_hydro_'+str(curr_year)+'.csv',header=0)   
 
 ##hourly ts of hydropower import
-df_hydro_import = pd.read_csv('data_laos_hydro_import_'+str(curr_year)+'.csv',header=0)   
+df_hydro_import = pd.read_csv('input/data_laos_hydro_import_'+str(curr_year)+'.csv',header=0)   
 
 ##hourly ts of load and exports
-df_load = pd.read_csv('data_laos_load_export_2016.csv',header=0)   
+df_load = pd.read_csv('input/data_laos_load_export_2016.csv',header=0)   
 
 ##hourly ts of reserve for national demand
 df_reserves = pd.DataFrame((df_load.iloc[:,5:64].sum(axis=1)*res_margin).values,columns=['Reserve'])
 
 #capacity and susceptence of each transmission line (one direction)
-df_trans1 = pd.read_csv('data_laos_transparam_2016.csv',header=0)
+df_trans1 = pd.read_csv('input/data_laos_transparam_2016.csv',header=0)
 #capacity and susceptence of each transmission line (both directions)
 df_trans2 = pd.DataFrame([df_trans1['sink'],df_trans1['source'],df_trans1['linemva'],df_trans1['linesus']]).transpose()
 df_trans2.columns = ['source','sink','linemva','linesus']
 df_paths = pd.concat([df_trans1,df_trans2], axis=0)
 df_paths.index = np.arange(len(df_paths))
+
+### Prepare Load Data with Hydropower Exports 
+hyd_dir = ['NamNgum2','TheunHinboun','NamTheun2','Xekaman1','Xekaman3']
+exp_dir = ['EGATUdon3','EGATSakonNakhou','EGATRoiEt2', 'VietPleiKu', 'VietThanhMy']
+
+####Create export data for direct exports
+exp_ratio = [1.0,1.0,0.93,1.0,0.90] ###source: Lao Energy report 2015
+for i in range(len(hyd_dir)):
+    df_load[exp_dir[i]] = df_hydro[hyd_dir[i]] * exp_ratio[i] * (1-TransLoss)
+
+####Export to Ubon2 includes 99% of HouayHo and 47% of Xeset_1 and Xeset_2
+df_load['EGATUbon2'] = (df_hydro['HouayHo']*0.99 + (df_hydro['Xeset1']+df_hydro['Xeset2'])*0.47) * (1-TransLoss)
+
+####Export to NongKhai includes 100% of NamNgum1, NamLeuk, and NamMang3
+df_load['EGATNongKhai'] = (df_hydro['NamNgum1']+df_hydro['NamLeuk']+df_hydro['NamMang3'])*1.0 * (1-TransLoss)
 
 
 ###list nodes
@@ -109,7 +127,7 @@ types = ['biomass','coal','slack','imp_china','imp_egat']
 
 
 ######====== write data.dat file ======########
-with open(''+str(data_name)+'.dat', 'w') as f:
+with open('input/'+str(data_name)+'.dat', 'w') as f:
 
 ###### generator sets by generator nodes
     for z in g_nodes:
@@ -313,6 +331,13 @@ with open(''+str(data_name)+'.dat', 'w') as f:
     for z in h_imports:
         for h in range(0,len(df_hydro_import)): 
             f.write(z + '\t' + str(h+1) + '\t' + str(df_hydro_import.loc[h,z]) + '\n')
+    f.write(';\n\n')
+    
+    # Deratef (hourly) 
+    f.write('param:' + '\t' + 'SimDeratef:=' + '\n')      
+    for z in gen_units:
+        for h in range(0,len(df_gen_deratef)): 
+            f.write(z + '\t' + str(h+1) + '\t' + str(df_gen_deratef.loc[h,z]) + '\n')
     f.write(';\n\n')
     
 ###### System wide hourly reserve
