@@ -50,7 +50,7 @@ for day in range(start,end):
             instance.HorizonHydroImport[z,i] = instance.SimHydroImport[z,(day-1)*24+i]
             
     for z in instance.Generators:
-     #load Deratef time series data ##v1.3
+     #load Deratef time series data 
         for i in K:
             instance.HorizonDeratef[z,i] = instance.SimDeratef[z,(day-1)*24+i]
         
