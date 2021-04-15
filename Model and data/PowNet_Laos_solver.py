@@ -31,8 +31,6 @@ nrsv=[]
 hydro=[]
 hydro_import=[]
 vlt_angle=[]
-Generator=[]
-
 
 for day in range(start,end):
     for z in instance.d_nodes:
